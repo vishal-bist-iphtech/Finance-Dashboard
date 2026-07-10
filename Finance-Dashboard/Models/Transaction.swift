@@ -9,8 +9,8 @@ import Foundation
 
 struct Transaction: Identifiable {
     
-    let id = UUID()
-    var title: String    
+    let id: UUID
+    var title: String
     var amount: Double
     var category: Category
     var isIncome: Bool

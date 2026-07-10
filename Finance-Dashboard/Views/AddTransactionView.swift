@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AddTransactionView: View {
 
-    @ObservedObject var viewModel: FinanceViewModel
+    @ObservedObject var transactionViewModel: TransactionViewModel
 
     @Environment(\.presentationMode) var presentationMode
 
@@ -88,19 +88,36 @@ struct AddTransactionView: View {
     }
 
     private func saveTransaction() {
-
-        guard let value = Double(amount) else {
-            return
-        }
-
-        viewModel.addTransaction(
+//
+        if let value = Double(amount) {
+            transactionViewModel.addTransaction(
             title: title,
             amount: value,
             category: selectedCategory,
             isIncome: isIncome
-        )
+    )
+            
+            // After successfully adding transaction close the sheet
+                    presentationMode.wrappedValue.dismiss()
+        }
+        else {
+            return
+        }
 
-        presentationMode.wrappedValue.dismiss()
+//  ----> more secured way of doing the above thing
+//        guard let value = Double(amount) else {
+//            return
+//        }
+//
+//        transactionViewModel.addTransaction(
+//            title: title,
+//            amount: value,
+//            category: selectedCategory,
+//            isIncome: isIncome
+//        )
+        
+        // After successfully adding transaction close the sheet
+//                presentationMode.wrappedValue.dismiss()
 
     }
 
@@ -111,7 +128,9 @@ struct AddTransactionView_Previews: PreviewProvider {
     static var previews: some View {
 
         AddTransactionView(
-            viewModel: FinanceViewModel()
+            transactionViewModel: TransactionViewModel(
+                context: PersistenceController.shared.container.viewContext
+            )
         )
 
     }

@@ -3,40 +3,32 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F2F99343000D87A00FE8C1D /* TransactionModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0F2F99323000D87A00FE8C1D /* TransactionModel.xcdatamodeld */; };
 		195E55972FFD102A00958B44 /* Finance_DashboardApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195E55962FFD102A00958B44 /* Finance_DashboardApp.swift */; };
 		195E55992FFD102A00958B44 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195E55982FFD102A00958B44 /* ContentView.swift */; };
 		195E559B2FFD102F00958B44 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 195E559A2FFD102F00958B44 /* Assets.xcassets */; };
 		195E559E2FFD102F00958B44 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 195E559D2FFD102F00958B44 /* Preview Assets.xcassets */; };
-		195E55A72FFD160000958B44 /* AddTransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195E55A62FFD160000958B44 /* AddTransactionView.swift */; };
-		195E55AA2FFD1DDE00958B44 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195E55A92FFD1DDE00958B44 /* Transaction.swift */; };
-		195E55AD2FFD278300958B44 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195E55AC2FFD278300958B44 /* DashboardView.swift */; };
-		195E55B02FFD315B00958B44 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195E55AF2FFD315B00958B44 /* Category.swift */; };
-		195E55B72FFD32BC00958B44 /* FinanceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195E55B62FFD32BC00958B44 /* FinanceViewModel.swift */; };
-		195E55BA2FFD332600958B44 /* SummaryCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195E55B92FFD332600958B44 /* SummaryCard.swift */; };
-		195E55BD2FFD335900958B44 /* TransactionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195E55BC2FFD335900958B44 /* TransactionRow.swift */; };
-		195E55C02FFD33F500958B44 /* BarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195E55BF2FFD33F500958B44 /* BarChartView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0F2F99333000D87A00FE8C1D /* TransactionModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TransactionModel.xcdatamodel; sourceTree = "<group>"; };
 		195E55932FFD102A00958B44 /* Finance-Dashboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Finance-Dashboard.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		195E55962FFD102A00958B44 /* Finance_DashboardApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Finance_DashboardApp.swift; sourceTree = "<group>"; };
 		195E55982FFD102A00958B44 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		195E559A2FFD102F00958B44 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		195E559D2FFD102F00958B44 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		195E559F2FFD102F00958B44 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		195E55A62FFD160000958B44 /* AddTransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionView.swift; sourceTree = "<group>"; };
-		195E55A92FFD1DDE00958B44 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
-		195E55AC2FFD278300958B44 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
-		195E55AF2FFD315B00958B44 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
-		195E55B62FFD32BC00958B44 /* FinanceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinanceViewModel.swift; sourceTree = "<group>"; };
-		195E55B92FFD332600958B44 /* SummaryCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryCard.swift; sourceTree = "<group>"; };
-		195E55BC2FFD335900958B44 /* TransactionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionRow.swift; sourceTree = "<group>"; };
-		195E55BF2FFD33F500958B44 /* BarChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		0FAE5FBA2FFFC8A40075D286 /* Views */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Views; sourceTree = "<group>"; };
+		0FAE5FBC2FFFC8CE0075D286 /* Models */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Models; sourceTree = "<group>"; };
+		0FAE5FBD2FFFC8D80075D286 /* ViewModels */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ViewModels; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		195E55902FFD102A00958B44 /* Frameworks */ = {
@@ -68,19 +60,15 @@
 		195E55952FFD102A00958B44 /* Finance-Dashboard */ = {
 			isa = PBXGroup;
 			children = (
+				0FAE5FBD2FFFC8D80075D286 /* ViewModels */,
+				0FAE5FBC2FFFC8CE0075D286 /* Models */,
 				195E55962FFD102A00958B44 /* Finance_DashboardApp.swift */,
 				195E55982FFD102A00958B44 /* ContentView.swift */,
-				195E55A62FFD160000958B44 /* AddTransactionView.swift */,
-				195E55AC2FFD278300958B44 /* DashboardView.swift */,
-				195E55B92FFD332600958B44 /* SummaryCard.swift */,
-				195E55BF2FFD33F500958B44 /* BarChartView.swift */,
-				195E55BC2FFD335900958B44 /* TransactionRow.swift */,
-				195E55AF2FFD315B00958B44 /* Category.swift */,
-				195E55B62FFD32BC00958B44 /* FinanceViewModel.swift */,
-				195E55A92FFD1DDE00958B44 /* Transaction.swift */,
+				0FAE5FBA2FFFC8A40075D286 /* Views */,
 				195E559A2FFD102F00958B44 /* Assets.xcassets */,
 				195E559F2FFD102F00958B44 /* Info.plist */,
 				195E559C2FFD102F00958B44 /* Preview Content */,
+				0F2F99323000D87A00FE8C1D /* TransactionModel.xcdatamodeld */,
 			);
 			path = "Finance-Dashboard";
 			sourceTree = "<group>";
@@ -107,6 +95,11 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				0FAE5FBA2FFFC8A40075D286 /* Views */,
+				0FAE5FBC2FFFC8CE0075D286 /* Models */,
+				0FAE5FBD2FFFC8D80075D286 /* ViewModels */,
 			);
 			name = "Finance-Dashboard";
 			productName = "Finance-Dashboard";
@@ -162,16 +155,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				195E55BD2FFD335900958B44 /* TransactionRow.swift in Sources */,
-				195E55A72FFD160000958B44 /* AddTransactionView.swift in Sources */,
-				195E55B72FFD32BC00958B44 /* FinanceViewModel.swift in Sources */,
+				0F2F99343000D87A00FE8C1D /* TransactionModel.xcdatamodeld in Sources */,
 				195E55992FFD102A00958B44 /* ContentView.swift in Sources */,
-				195E55AD2FFD278300958B44 /* DashboardView.swift in Sources */,
-				195E55BA2FFD332600958B44 /* SummaryCard.swift in Sources */,
-				195E55AA2FFD1DDE00958B44 /* Transaction.swift in Sources */,
-				195E55C02FFD33F500958B44 /* BarChartView.swift in Sources */,
 				195E55972FFD102A00958B44 /* Finance_DashboardApp.swift in Sources */,
-				195E55B02FFD315B00958B44 /* Category.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,7 +290,7 @@
 				DEVELOPMENT_TEAM = B6WL9U8JTW;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "Finance-Dashboard/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -326,7 +312,7 @@
 				DEVELOPMENT_TEAM = B6WL9U8JTW;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "Finance-Dashboard/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -360,6 +346,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		0F2F99323000D87A00FE8C1D /* TransactionModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				0F2F99333000D87A00FE8C1D /* TransactionModel.xcdatamodel */,
+			);
+			currentVersion = 0F2F99333000D87A00FE8C1D /* TransactionModel.xcdatamodel */;
+			path = TransactionModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 195E558B2FFD102A00958B44 /* Project object */;
 }

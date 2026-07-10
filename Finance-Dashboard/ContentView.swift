@@ -8,11 +8,28 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @Environment(\.managedObjectContext)
+    private var viewContext
+
+    // TransactionViewModel initialized
+    @ObservedObject var transactionViewModel: TransactionViewModel
 
     var body: some View {
+        
+        TabView {
+            DashboardView(transactionViewModel: transactionViewModel)
+                        .tabItem {
+                            Image(systemName: "house.fill")
+                            Text("Dashboard")
+                        }
 
-        DashboardView()
-
+            TransactionsView(transactionViewModel: transactionViewModel)
+                        .tabItem {
+                            Image(systemName: "list.bullet")
+                            Text("Transactions")
+                        }
+                }
     }
 
 }
@@ -21,7 +38,12 @@ struct ContentView_Previews: PreviewProvider {
 
     static var previews: some View {
 
-        ContentView()
+        Group {
+            ContentView(transactionViewModel: TransactionViewModel(
+                context: PersistenceController.shared.container.viewContext
+                )
+            )
+        }
 
     }
 

@@ -31,7 +31,7 @@ struct TransactionRow: View {
                 
                 Text(transaction.isIncome ? "+₹\(transaction.amount, specifier: "%.2f")"
                                           : "-₹\(transaction.amount, specifier: "%.2f")")
-                    .foregroundColor(transaction.isIncome ? .green : .red)
+                    .foregroundColor(transaction.isIncome ? .green : .black)
                     .fontWeight(.bold)
                 
                 Text(dateFormatter.string(from: transaction.date))
@@ -57,6 +57,7 @@ struct TransactionRow_Previews: PreviewProvider {
         
         TransactionRow(
             transaction: Transaction(
+                id: UUID(),
                 title: "Salary",
                 amount: 50000,
                 category: .salary,
