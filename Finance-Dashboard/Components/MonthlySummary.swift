@@ -178,6 +178,21 @@ struct MonthlySummary: View {
             .padding(.horizontal,20)
             .padding(.vertical, 12)
         }
+        .padding(.vertical, 8)
+        .background(
+            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                .fill(Color(.systemBackground))
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                .stroke(Color.black.opacity(0.05), lineWidth: 0.5)
+        )
+        .shadow(
+            color: Color.black.opacity(0.06),
+            radius: 6,
+            x: 0,
+            y: 3
+        )
     }
 }
 
