@@ -141,7 +141,7 @@ class TransactionViewModel: ObservableObject {
     }
     
     var totalBalance: Double {
-        totalIncome - totalExpense
+        max(totalIncome - totalExpense, 0)
     }
     
     var savingsProgress: Double {
@@ -173,7 +173,11 @@ class TransactionViewModel: ObservableObject {
     }
     
     var currentMonthSavings: Double {
-        currentMonthIncome - currentMonthExpense
+        max(currentMonthIncome - currentMonthExpense, 0)
+    }
+    
+    var totalSavings: Double {
+        max(totalIncome - totalExpense, 0)
     }
     
     var expenseCategories: [ExpenseCategory] {
@@ -193,6 +197,10 @@ class TransactionViewModel: ObservableObject {
             )
         }
     }
+    
+    
+    
+    // MARK: Functions
     
     private func color(for category: Category) -> Color {
         
@@ -224,7 +232,6 @@ class TransactionViewModel: ObservableObject {
         }
     }
     
-    // MARK: Functions
     
     func addTransaction(
         title: String,
@@ -290,7 +297,11 @@ class TransactionViewModel: ObservableObject {
         do {
             let entities = try context.fetch(request)
             
-            transactions = entities.map { entity in
+            if(entities.isEmpty) {
+                TransactionEntity.CreateDummyData(context: context)
+            } else {
+                
+                transactions = entities.map { entity in
                     Transaction(
                         id: entity.id ?? UUID(),
                         title: entity.title ?? "",
@@ -299,6 +310,7 @@ class TransactionViewModel: ObservableObject {
                         isIncome: entity.isIncome,
                         date: entity.date ?? Date()
                     )
+                }
             }
         } catch {
             print("Failed to fetch transactions")
