@@ -80,7 +80,7 @@ struct MonthlySummary: View {
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(12)
-                    .background(Color.gray.opacity(0.1))
+                    .background(Color(.secondarySystemBackground))
                     .cornerRadius(10)
                     
                     // Expense Card
@@ -97,7 +97,7 @@ struct MonthlySummary: View {
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(12)
-                    .background(Color.gray.opacity(0.1))
+                    .background(Color(.secondarySystemBackground))
                     .cornerRadius(10)
                 }
             }

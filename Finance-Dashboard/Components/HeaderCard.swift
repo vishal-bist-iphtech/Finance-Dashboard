@@ -70,6 +70,7 @@ struct HeaderCard: View {
 
                     }
                 }
+                .padding(.bottom)
 
             // Decorative circles
             .overlay {
