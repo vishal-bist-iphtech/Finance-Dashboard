@@ -25,6 +25,8 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		0F7997F73004C5F400FCA3A5 /* Components */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Components; sourceTree = "<group>"; };
+		0F7997F93004C62100FCA3A5 /* Extensions */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Extensions; sourceTree = "<group>"; };
 		0FAE5FBA2FFFC8A40075D286 /* Views */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Views; sourceTree = "<group>"; };
 		0FAE5FBC2FFFC8CE0075D286 /* Models */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Models; sourceTree = "<group>"; };
 		0FAE5FBD2FFFC8D80075D286 /* ViewModels */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ViewModels; sourceTree = "<group>"; };
@@ -60,6 +62,7 @@
 		195E55952FFD102A00958B44 /* Finance-Dashboard */ = {
 			isa = PBXGroup;
 			children = (
+				0F7997F73004C5F400FCA3A5 /* Components */,
 				0FAE5FBD2FFFC8D80075D286 /* ViewModels */,
 				0FAE5FBC2FFFC8CE0075D286 /* Models */,
 				195E55962FFD102A00958B44 /* Finance_DashboardApp.swift */,
@@ -69,6 +72,7 @@
 				195E559F2FFD102F00958B44 /* Info.plist */,
 				195E559C2FFD102F00958B44 /* Preview Content */,
 				0F2F99323000D87A00FE8C1D /* TransactionModel.xcdatamodeld */,
+				0F7997F93004C62100FCA3A5 /* Extensions */,
 			);
 			path = "Finance-Dashboard";
 			sourceTree = "<group>";
@@ -97,6 +101,8 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				0F7997F73004C5F400FCA3A5 /* Components */,
+				0F7997F93004C62100FCA3A5 /* Extensions */,
 				0FAE5FBA2FFFC8A40075D286 /* Views */,
 				0FAE5FBC2FFFC8CE0075D286 /* Models */,
 				0FAE5FBD2FFFC8D80075D286 /* ViewModels */,
