@@ -20,16 +20,22 @@ struct ContentView: View {
         TabView {
             DashboardView(transactionViewModel: transactionViewModel)
                         .tabItem {
-                            Image(systemName: "house.fill")
-                            Text("Dashboard")
+                            Label("Dashboard", systemImage: "house.fill")
                         }
+                        .tag(0)
 
             TransactionsView(transactionViewModel: transactionViewModel)
                         .tabItem {
-                            Image(systemName: "list.bullet")
-                            Text("Transactions")
+                            Label("Transactions", systemImage: "list.bullet")
                         }
-                }
+                        .tag(1)
+            InsightsView(transactionViewModel: transactionViewModel)
+                        .tabItem {
+                            Label("Insights", systemImage: "chart.pie")
+                        }
+                        .tag(2)
+                
+            }
     }
 
 }
