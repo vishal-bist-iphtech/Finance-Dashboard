@@ -108,7 +108,7 @@ struct InsightsView: View {
                         )
                         
                         SummaryCard(
-                            title: "Savings",
+                            title: "Total Savings",
                             amount: transactionViewModel.currentMonthSavings,
                             icon: "percent",
                             color: .blue
@@ -161,14 +161,14 @@ struct InsightsView: View {
                             
                             InsightCard(
                                 title: "Avg. Expense",
-                                value: "₹\(averageExpense, default: "%.0f")",
+                                value: "₹\(String(format: "%.1f", averageExpense))",
                                 icon: "creditcard.fill",
                                 color: .red
                             )
                             
                             InsightCard(
                                 title: "Savings Rate",
-                                value: "\(savingsRate, default: "%.1f")%",
+                                value: "₹\(String(format: "%.1f", savingsRate))",
                                 icon: "percent",
                                 color: .green
                             )
