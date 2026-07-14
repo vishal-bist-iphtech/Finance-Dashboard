@@ -12,6 +12,8 @@ struct TransactionsView: View {
     @ObservedObject var transactionViewModel: TransactionViewModel
     @State private var searchInput = ""
     @State private var selectedTransaction: Transaction?
+    @State private var deleteTransaction: Transaction?
+    @State private var confirmDeletion = false
     
     var filteredTransactions: [Finance_Dashboard.Transaction] {
         if searchInput.isEmpty {
@@ -25,54 +27,63 @@ struct TransactionsView: View {
             .reversed()
     }
     
-    @ViewBuilder
-    private func transactionCard(_ transaction: Transaction) -> some View {
-        VStack(spacing: 0) {
-            TransactionRow(transaction: transaction)
-                .padding(12)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(
-            RoundedRectangle(cornerRadius: 14)
-                .fill(Color(.secondarySystemBackground))
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: 14, style: .continuous)
-                .stroke(Color.black.opacity(0.05), lineWidth: 0.5)
-        )
-        .shadow(color: Color.black.opacity(0.06), radius: 6, x: 0, y: 3)
-        .padding(.horizontal)
-    }
-    
     var body: some View {
         NavigationStack {
             ZStack {
-                Color(.systemGroupedBackground)
-                    .ignoresSafeArea()
+                List {
 
-                ScrollView {
-                    LazyVStack(spacing: 12) {
-                        if filteredTransactions.isEmpty {
-                            VStack(spacing: 12) {
-                                Image(systemName: "magnifyingglass")
-                                    .font(.largeTitle)
-                                    .foregroundColor(.gray)
-                                Text("No transactions found")
-                                    .foregroundColor(.gray)
-                            }
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 40)
-                        } else {
-                            ForEach(filteredTransactions) { transaction in
-                                transactionCard(transaction)
-                                    .onTapGesture {
-                                        selectedTransaction = transaction
-                                    }
-                            }
+                    if filteredTransactions.isEmpty {
+
+                        VStack(spacing: 12) {
+
+                            Image(systemName: "magnifyingglass")
+                                .font(.largeTitle)
+                                .foregroundStyle(.gray)
+
+                            Text("No transactions found")
+                                .foregroundStyle(.gray)
+
                         }
+                        .frame(maxWidth: .infinity)
+                        .listRowBackground(Color.clear)
+
+                    } else {
+
+                        ForEach(filteredTransactions) { transaction in
+
+                            TransactionCard(transaction: transaction)
+                                .listRowInsets(EdgeInsets())
+                                .listRowSeparator(.hidden)
+                                .listRowBackground(Color.clear)
+                                .padding(.vertical, 6)
+                                .onTapGesture {
+                                    selectedTransaction = transaction
+                                }
+                                .swipeActions(edge: .trailing) {
+
+                                    Button(role: .destructive) {
+
+                                        deleteTransaction = transaction
+                                        
+                                        confirmDeletion = true
+
+                                    } label: {
+
+                                        Label("Delete", systemImage: "trash")
+
+                                    }
+
+                                }
+                                .padding(.horizontal,6)
+
+                        }
+
                     }
-                    .padding(.vertical)
+
                 }
+                .listStyle(.plain)
+                .scrollContentBackground(.hidden)
+                .background(Color(.systemGroupedBackground))
             }
             .sheet(item: $selectedTransaction) { transaction in
                 EditTransactionView(
@@ -83,17 +94,36 @@ struct TransactionsView: View {
             .navigationTitle("Transactions")
         }
         .searchable(text: $searchInput, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search transactions..")
+        .alert("Delete Transaction?", isPresented: $confirmDeletion) {
+
+            Button("Cancel", role: .cancel) {
+                deleteTransaction = nil
+            }
+
+            Button("Delete", role: .destructive) {
+
+                if let transaction = deleteTransaction {
+                    transactionViewModel.deleteTransaction(transaction)
+                }
+                
+                deleteTransaction = nil
+
+            }
+
+        } message: {
+
+            Text("This action cannot be undone.")
+
+        }
     }
 }
 
 
 
-struct TransactionsView_Previews: PreviewProvider {
-    static var previews: some View {
-        TransactionsView(
-            transactionViewModel: TransactionViewModel(
-                context: PersistenceController.shared.container.viewContext
-            )
+#Preview {
+    TransactionsView(
+        transactionViewModel: TransactionViewModel(
+            context: PersistenceController.shared.container.viewContext
         )
-    }
+    )
 }
