@@ -10,13 +10,13 @@ import SwiftUI
 struct InsightsView: View {
     
     @ObservedObject var transactionViewModel: TransactionViewModel
-    @State private var selectedTimeFrame: TimeFrame = .monthly
+//    @State private var selectedTimeFrame: TimeFrame = .monthly
     
-    enum TimeFrame: String, CaseIterable {
-        case weekly = "Weekly"
-        case monthly = "Monthly"
-        case yearly = "Yearly"
-    }
+//    enum TimeFrame: String, CaseIterable {
+//        case weekly = "Weekly"
+//        case monthly = "Monthly"
+//        case yearly = "Yearly"
+//    }
     
     private var totalExpense: Double {
         transactionViewModel.expenseCategories.reduce(0) { $0 + $1.value }
