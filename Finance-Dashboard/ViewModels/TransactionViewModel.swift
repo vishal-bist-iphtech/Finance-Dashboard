@@ -11,119 +11,18 @@ import CoreData
 
 class TransactionViewModel: ObservableObject {
     
-    // Published Properties
-    @Published var savings: Double = 20000
+    
+    @Published var savingsGoal: Double = 0
     
     private let context: NSManagedObjectContext
     
     @Published var transactions: [Transaction] = []
-  
-// MARK: Sample transactions
-//        Transaction(
-//            id: UUID(),
-//            title: "Monthly Salary",
-//            amount: 50000,
-//            category: .salary,
-//            isIncome: true,
-//            date: Date()
-//        ),
-//        
-//        Transaction(
-//            id: UUID(),
-//            title: "Groceries",
-//            amount: 2500,
-//            category: .food,
-//            isIncome: false,
-//            date: Date()
-//        ),
-//        
-//        Transaction(
-//            id: UUID(),
-//            title: "Movie Night",
-//            amount: 800,
-//            category: .entertainment,
-//            isIncome: false,
-//            date: Date()
-//        ),
-//        Transaction(
-//            id: UUID(),
-//            title: "EMI",
-//            amount: 2200,
-//            category: .bills,
-//            isIncome: false,
-//            date: Date()
-//        ),
-//        
-//        Transaction(
-//            id: UUID(),
-//            title: "Electricity Bill",
-//            amount: 1500,
-//            category: .bills,
-//            isIncome: false,
-//            date: Date()
-//        ),
-//        Transaction(
-//            id: UUID(),
-//            title: "Groceries",
-//            amount: 500,
-//            category: .shopping,
-//            isIncome: false,
-//            date: Date()
-//        ),
-//        Transaction(
-//            id: UUID(),
-//            title: "Pizza",
-//            amount: 400,
-//            category: .food,
-//            isIncome: false,
-//            date: Date()
-//        ),
-//        Transaction(
-//            id: UUID(),
-//            title: "SIP",
-//            amount: 1000,
-//            category: .investment,
-//            isIncome: false,
-//            date: Date()
-//        ),
-//        Transaction(
-//            id: UUID(),
-//            title: "Borrowed",
-//            amount: 1500,
-//            category: .investment,
-//            isIncome: true,
-//            date: Date()
-//        ),
-//        Transaction(
-//            id: UUID(),
-//            title: "Phone Recharge",
-//            amount: 500,
-//            category: .bills,
-//            isIncome: false,
-//            date: Date()
-//        ),
-//        Transaction(
-//            id: UUID(),
-//            title: "Taxi fare",
-//            amount: 800,
-//            category: .travel,
-//            isIncome: false,
-//            date: Date()
-//        ),
-//        Transaction(
-//            id: UUID(),
-//            title: "Ice-cream",
-//            amount: 200,
-//            category: .food,
-//            isIncome: false,
-//            date: Date()
-//        ),
-    
 
     init(context: NSManagedObjectContext) {
         self.context = context
         
         loadTransactions()
+        loadUserPreferences()
     }
     
     // Computed Properties
@@ -145,8 +44,8 @@ class TransactionViewModel: ObservableObject {
     }
     
     var savingsProgress: Double {
-        guard savings > 0 else { return 0 }
-        return min(currentMonthSavings / savings, 1.0)
+        guard savingsGoal > 0 else { return 0 }
+        return min(currentMonthSavings / savingsGoal, 1.0)
     }
     
     var currentMonthTransactions: [Transaction] {
@@ -202,6 +101,7 @@ class TransactionViewModel: ObservableObject {
     
     // MARK: Functions
     
+    // MARK: Color mapping function for transaction categories
     private func color(for category: Category) -> Color {
         
         switch category {
@@ -290,6 +190,22 @@ class TransactionViewModel: ObservableObject {
         }
     }
     
+    func deleteTransaction(_ transaction: Transaction) {
+        guard let entity = fetchEntity(for: transaction) else { return }
+        
+        context.delete(entity)
+        
+        do {
+            
+            try context.save()
+            
+            loadTransactions()
+            
+        } catch {
+            print("Failed to delete transaction \n \(error.localizedDescription)")
+        }
+    }
+    
     func loadTransactions() {
 
         let request: NSFetchRequest<TransactionEntity> =
@@ -324,6 +240,48 @@ class TransactionViewModel: ObservableObject {
 
     }
     
+    private func loadUserPreferences() {
+        let request: NSFetchRequest<UserPreferenceEntity> = UserPreferenceEntity.fetchRequest()
+        
+        do {
+            let preferences = try context.fetch(request)
+            
+            
+            if let preference = preferences.first {
+                savingsGoal = preference.savings
+            } else {
+                let preference = UserPreferenceEntity(context: context)
+                preference.savings = savingsGoal
+                
+                try context.save()
+            }
+            
+        } catch {
+            print("Failed to load user preferences \n \(error.localizedDescription)")
+        }
+    }
+    
+    func updateSavingsGoal(_ amount: Double) {
+        let request: NSFetchRequest<UserPreferenceEntity> = UserPreferenceEntity.fetchRequest()
+        
+        do {
+            let preferences = try context.fetch(request)
+            
+            if let preference = preferences.first {
+                preference.savings = amount
+            } else {
+                let preference = UserPreferenceEntity(context: context)
+                preference.savings = amount
+            }
+            
+            try context.save()
+            savingsGoal = amount
+            
+        } catch {
+            print("Failed to update user preferences \n \(error.localizedDescription)")
+        }
+    }
+    
     private func saveToCoreData(
         title: String,
         amount: Double,
@@ -347,38 +305,6 @@ class TransactionViewModel: ObservableObject {
             print(error.localizedDescription)
         }
     }
-//    
-//    private func fetchTransactions() {
-//        
-//        let request: NSFetchRequest<TransactionEntity> = TransactionEntity.fetchRequest()
-//        
-//        request.sortDescriptors = [
-//            NSSortDescriptor(key: "date", ascending: false)
-//        ]
-//        
-//        do {
-//            let entities = try context.fetch(request)
-//            
-//            if(entities.isEmpty) {
-//                TransactionEntity.CreateDummyData(context: context)
-//            } else {
-//                
-//                transactions = entities.map { entity in
-//                    Transaction(
-//                        id: entity.id ?? UUID(),
-//                        title: entity.title ?? "",
-//                        amount: entity.amount,
-//                        category: Category(rawValue: entity.category ?? "") ?? .other,
-//                        isIncome: entity.isIncome,
-//                        date: entity.date ?? Date()
-//                    )
-//                }
-//            }
-//        } catch {
-//            print("Failed to fetch transactions")
-//            print(error.localizedDescription)
-//        }
-//    }
     
     private func fetchEntity(
         for transaction: Transaction
@@ -402,3 +328,139 @@ class TransactionViewModel: ObservableObject {
         }
     }
 }
+
+
+//
+//    private func fetchTransactions() {
+//
+//        let request: NSFetchRequest<TransactionEntity> = TransactionEntity.fetchRequest()
+//
+//        request.sortDescriptors = [
+//            NSSortDescriptor(key: "date", ascending: false)
+//        ]
+//
+//        do {
+//            let entities = try context.fetch(request)
+//
+//            if(entities.isEmpty) {
+//                TransactionEntity.CreateDummyData(context: context)
+//            } else {
+//
+//                transactions = entities.map { entity in
+//                    Transaction(
+//                        id: entity.id ?? UUID(),
+//                        title: entity.title ?? "",
+//                        amount: entity.amount,
+//                        category: Category(rawValue: entity.category ?? "") ?? .other,
+//                        isIncome: entity.isIncome,
+//                        date: entity.date ?? Date()
+//                    )
+//                }
+//            }
+//        } catch {
+//            print("Failed to fetch transactions")
+//            print(error.localizedDescription)
+//        }
+//    }
+
+// MARK: Sample transactions
+//        Transaction(
+//            id: UUID(),
+//            title: "Monthly Salary",
+//            amount: 50000,
+//            category: .salary,
+//            isIncome: true,
+//            date: Date()
+//        ),
+//
+//        Transaction(
+//            id: UUID(),
+//            title: "Groceries",
+//            amount: 2500,
+//            category: .food,
+//            isIncome: false,
+//            date: Date()
+//        ),
+//
+//        Transaction(
+//            id: UUID(),
+//            title: "Movie Night",
+//            amount: 800,
+//            category: .entertainment,
+//            isIncome: false,
+//            date: Date()
+//        ),
+//        Transaction(
+//            id: UUID(),
+//            title: "EMI",
+//            amount: 2200,
+//            category: .bills,
+//            isIncome: false,
+//            date: Date()
+//        ),
+//
+//        Transaction(
+//            id: UUID(),
+//            title: "Electricity Bill",
+//            amount: 1500,
+//            category: .bills,
+//            isIncome: false,
+//            date: Date()
+//        ),
+//        Transaction(
+//            id: UUID(),
+//            title: "Groceries",
+//            amount: 500,
+//            category: .shopping,
+//            isIncome: false,
+//            date: Date()
+//        ),
+//        Transaction(
+//            id: UUID(),
+//            title: "Pizza",
+//            amount: 400,
+//            category: .food,
+//            isIncome: false,
+//            date: Date()
+//        ),
+//        Transaction(
+//            id: UUID(),
+//            title: "SIP",
+//            amount: 1000,
+//            category: .investment,
+//            isIncome: false,
+//            date: Date()
+//        ),
+//        Transaction(
+//            id: UUID(),
+//            title: "Borrowed",
+//            amount: 1500,
+//            category: .investment,
+//            isIncome: true,
+//            date: Date()
+//        ),
+//        Transaction(
+//            id: UUID(),
+//            title: "Phone Recharge",
+//            amount: 500,
+//            category: .bills,
+//            isIncome: false,
+//            date: Date()
+//        ),
+//        Transaction(
+//            id: UUID(),
+//            title: "Taxi fare",
+//            amount: 800,
+//            category: .travel,
+//            isIncome: false,
+//            date: Date()
+//        ),
+//        Transaction(
+//            id: UUID(),
+//            title: "Ice-cream",
+//            amount: 200,
+//            category: .food,
+//            isIncome: false,
+//            date: Date()
+//        ),
+    
