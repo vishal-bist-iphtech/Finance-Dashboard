@@ -19,22 +19,12 @@ struct RecentTransactions: View {
             
             ForEach(transactionViewModel.transactions.reversed().prefix(5)) { transaction in
                 VStack(spacing: 0) {
-                    TransactionRow(transaction: transaction)
-                        .padding(12)
+                    TransactionCard(transaction: transaction)
+                        
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .background(
-                    RoundedRectangle(cornerRadius: 14, style: .continuous)
-                        .fill(Color(.systemBackground))
-                )
-                .overlay(
-                    RoundedRectangle(cornerRadius: 14, style: .continuous)
-                        .stroke(Color.black.opacity(0.05), lineWidth: 0.5)
-                )
-                .shadow(color: Color.black.opacity(0.06), radius: 6, x: 0, y: 3)
             }
         }
-        .padding()
+        .padding(.horizontal, 6)
         .background(
             RoundedRectangle(cornerRadius: 20, style: .continuous)
                 .fill(Color(.systemBackground))
