@@ -10,7 +10,7 @@ import SwiftUI
 struct MonthlySummary: View {
     
     @ObservedObject var transactionViewModel: TransactionViewModel
-    @State private var showAddSavings = false
+    @State private var showAddSavingsGoal = false
     
     private let currentMonth: String = {
         let formatter = DateFormatter()
@@ -114,20 +114,20 @@ struct MonthlySummary: View {
                         Text("Savings Goal")
                             .font(.subheadline)
                             .fontWeight(.medium)
-                        Text("₹\(transactionViewModel.currentMonthSavings, specifier: "%.2f") of ₹\(transactionViewModel.savings, specifier: "%.2f") saved")
+                        Text("₹\(transactionViewModel.currentMonthSavings, specifier: "%.2f") of ₹\(transactionViewModel.savingsGoal, specifier: "%.2f") saved")
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
                     
                     Spacer()
                     
-                    Button(action: { showAddSavings = true }) {
+                    Button(action: { showAddSavingsGoal = true }) {
                         Label("Add", systemImage: "plus.circle.fill")
                             .font(.subheadline)
                             .foregroundColor(.black)
                     }
-                    .sheet(isPresented: $showAddSavings) {
-                        AddSavingsView(
+                    .sheet(isPresented: $showAddSavingsGoal) {
+                        AddSavingsGoalView(
                             transactionViewModel: transactionViewModel
                         )
                     }
