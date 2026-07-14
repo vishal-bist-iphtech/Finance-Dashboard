@@ -2,70 +2,66 @@
 //  TransactionRow.swift
 //  Finance-Dashboard
 //
-//  Created by iPHTech 7 on 07/07/26.
+//  Created by iPHTech 34 on 07/07/26.
 //
 
-import SwiftUI
 
-struct TransactionRow: View {
-    
+import SwiftUI
+struct TransactionCard: View {
     let transaction: Transaction
-    
     var body: some View {
-        
-        HStack {
-            
+        HStack(spacing: 0) {
             VStack(alignment: .leading, spacing: 5) {
-                
-                Text(transaction.title)
-                    .font(.headline)
-                
+                Text(transaction.title) .font(.headline)
                 Text(transaction.category.rawValue)
-                    .font(.caption)
-                    .foregroundColor(.gray)
+                .font(.caption)
+                .foregroundColor(.gray)
             }
-            
             Spacer()
-            
-            VStack(alignment: .trailing, spacing: 5) {
-                
-                Text(transaction.isIncome ? "+₹\(transaction.amount, specifier: "%.2f")"
-                                          : "-₹\(transaction.amount, specifier: "%.2f")")
-                    .foregroundColor(transaction.isIncome ? .green : .black)
-                    .fontWeight(.bold)
-                
+            VStack( spacing: 5) {
+                Text(transaction.isIncome ? "+₹\(transaction.amount, specifier: "%.2f")" : "-₹\(transaction.amount, specifier: "%.2f")")
+                .foregroundColor(transaction.isIncome ? .green : .black)
+                .fontWeight(.bold)
                 Text(dateFormatter.string(from: transaction.date))
-                    .font(.caption2)
-                    .foregroundColor(.gray)
+                .font(.caption2)
+                .foregroundColor(.gray)
+                
             }
+            .padding(.vertical, 5)
+            
         }
-        .padding(.vertical, 5)
+        .padding()
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(
+            RoundedRectangle(cornerRadius: 14, style: .continuous)
+                .fill(Color(.systemBackground))
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 14, style: .continuous)
+                .stroke(Color.black.opacity(0.05), lineWidth: 0.5)
+        )
+        .shadow(color: Color.black.opacity(0.06), radius: 6, x: 0, y: 3)
     }
 }
 
 private let dateFormatter: DateFormatter = {
-    
     let formatter = DateFormatter()
     formatter.dateStyle = .medium
-    
     return formatter
 }()
 
-struct TransactionRow_Previews: PreviewProvider {
-    
-    static var previews: some View {
-        
-        TransactionRow(
-            transaction: Transaction(
-                id: UUID(),
-                title: "Salary",
-                amount: 50000,
-                category: .salary,
-                isIncome: true,
-                date: Date()
-            )
+#Preview {
+
+    TransactionCard(
+        transaction: Transaction(
+            id: UUID(),
+            title: "Salary",
+            amount: 50000,
+            category: .salary,
+            isIncome: true,
+            date: Date()
         )
-        .previewLayout(.sizeThatFits)
-        .padding()
-    }
+    )
+    .padding()
+
 }
