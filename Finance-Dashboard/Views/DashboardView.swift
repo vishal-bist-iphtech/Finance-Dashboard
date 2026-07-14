@@ -30,6 +30,11 @@ struct DashboardView: View {
                             
                             // MARK: Header                            
                             HeaderCard(showingAddTransaction: $showingAddTransaction, transactionViewModel: transactionViewModel)
+                                .sheet(isPresented: $showingAddTransaction) {
+                                    AddTransactionView(
+                                        transactionViewModel: transactionViewModel
+                                    )
+                                }
                             
                             // MARK: Monthly Summary
                             MonthlySummary(transactionViewModel: transactionViewModel)
@@ -39,10 +44,8 @@ struct DashboardView: View {
                         }
                     }
                     .scrollIndicators(.hidden)
-                }
-                
+                }                
             }
-            .navigationBarHidden(true)
         }
     }
 }
