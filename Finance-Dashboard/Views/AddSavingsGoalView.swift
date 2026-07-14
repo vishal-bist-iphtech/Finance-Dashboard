@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AddSavingsView: View {
+struct AddSavingsGoalView: View {
     @ObservedObject var transactionViewModel: TransactionViewModel
     @Environment(\.presentationMode) var presentationMode
     @State private var amount = ""
@@ -27,7 +27,7 @@ struct AddSavingsView: View {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Add") {
                         if let value = Double(amount) {
-                            transactionViewModel.savings = value
+                            transactionViewModel.updateSavingsGoal(value)
                             presentationMode.wrappedValue.dismiss()
                         }
                     }
@@ -38,11 +38,8 @@ struct AddSavingsView: View {
     }
 }
 
-struct AddSavingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        AddSavingsView(transactionViewModel: TransactionViewModel(
-            context: PersistenceController.shared.container.viewContext
+#Preview {
+        AddSavingsGoalView(transactionViewModel: TransactionViewModel(
+            context: PersistenceController.shared.container.viewContext)
         )
-        )
-    }
 }
