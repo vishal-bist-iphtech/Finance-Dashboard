@@ -8,98 +8,107 @@
 import SwiftUI
 
 struct HeaderCard: View {
-    
+
     @Binding var showingAddTransaction: Bool
     @ObservedObject var transactionViewModel: TransactionViewModel
-    
-    var body: some View {
-        ZStack(alignment: .bottom) {
+    @AppStorage("isDarkMode")
+    private var isDarkMode = false
 
-            // MARK: Header Background
-            RoundedRectangle(cornerRadius: 28)
+    var body: some View {
+
+        ZStack(alignment: .top) {
+
+            // MARK: Background Card
+            RoundedRectangle(cornerRadius: 32)
                 .fill(
                     LinearGradient(
-                        colors: [
-                            .blue,
-                            .indigo
-                        ],
+                        colors: [.blue, .indigo],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     )
                 )
-                .padding(.top,-800)
-                .padding(-20)
-                .frame(height: 220)
-                .overlay(alignment: .top) {
+                .padding(.top, -300)
+                .frame(height: 250)
+                .overlay(alignment: .topTrailing) {
 
-                    HStack {
+                    Circle()
+                        .fill(.white.opacity(0.08))
+                        .frame(width: 180)
+                        .offset(x: 60, y: -40)
+                        .allowsHitTesting(false)
 
-                        VStack(alignment: .leading, spacing: 4) {
+                }
+                .overlay(alignment: .bottomLeading) {
 
-                            Text("Finance Dashboard")
-                                .font(.title.bold())
-                                .foregroundStyle(.white)
+                    Circle()
+                        .fill(.white.opacity(0.05))
+                        .frame(width: 120)
+                        .offset(x: -30, y: 40)
+                        .allowsHitTesting(false)
 
-                            Text("Track your finances")
-                                .font(.title3)
-                                .foregroundStyle(.white.opacity(0.8))
-                        }
-                        .padding()
+                }
 
-                        Spacer()
+            VStack(spacing: 0) {
 
-                        Button {
+                // MARK: Header
 
-                            showingAddTransaction = true
+                HStack {
 
-                        } label: {
+                    VStack(alignment: .leading, spacing: 4) {
 
-                            Image(systemName: "plus")
-                                .font(.title3.weight(.semibold))
-                                .foregroundStyle(.white)
-                                .frame(width: 44, height: 44)
-                                .background(.white.opacity(0.2))
-                                .clipShape(Circle())
-                        }
-                        .padding()
-                        .sheet(isPresented: $showingAddTransaction) {
-                            AddTransactionView(
-                                transactionViewModel: transactionViewModel
-                            )
-                        }
+                        Text("Finance Dashboard")
+                            .font(.title.bold())
+                            .foregroundStyle(.white)
+
+                        Text("Track your finances")
+                            .font(.subheadline)
+                            .foregroundStyle(.white.opacity(0.85))
 
                     }
+
+                    Spacer()
+
+                    Button {
+
+                        showingAddTransaction = true
+
+                    } label: {
+
+                        Image(systemName: "plus")
+                            .font(.title3.weight(.bold))
+                            .foregroundStyle(.white)
+                            .frame(width: 46, height: 46)
+                            .background(.white.opacity(0.20))
+                            .clipShape(Circle())
+
+                    }
+
                 }
-                .padding(.bottom)
+                .padding(.horizontal, 24)
+                .padding(.top, 24)
 
-            // Decorative circles
-            .overlay {
+                Spacer()
 
-                Circle()
-                    .fill(.white.opacity(0.08))
-                    .frame(width: 180)
-                    .offset(x: 120, y: -70)
-
-                Circle()
-                    .fill(.white.opacity(0.05))
-                    .frame(width: 120)
-                    .offset(x: -130, y: 60)
             }
 
             // MARK: Balance Card
+
             BalanceCard(transactionViewModel: transactionViewModel)
-                .offset(y: 80)
+                .padding(.horizontal, 20)
+                .offset(y: 140)
 
         }
-        .padding(.bottom, 80)
+        .frame(height: 330)
     }
 }
-    
 
 #Preview {
-    HeaderCard(showingAddTransaction: .constant(false),
-               transactionViewModel: TransactionViewModel(
-                   context: PersistenceController.shared.container.viewContext
-               )
+
+    HeaderCard(
+        showingAddTransaction: .constant(false),
+        transactionViewModel: TransactionViewModel(
+            context: PersistenceController.shared.container.viewContext
+        )
     )
+
 }
