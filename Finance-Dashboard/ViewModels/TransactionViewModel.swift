@@ -123,7 +123,7 @@ class TransactionViewModel: ObservableObject {
     init(context: NSManagedObjectContext) {
         self.context = context
         
-        fetchTransactions()
+        loadTransactions()
     }
     
     // Computed Properties
@@ -261,6 +261,68 @@ class TransactionViewModel: ObservableObject {
 //        transactions.append(newTransaction)
     }
     
+    func updateTransaction(
+        _ transaction: Transaction,
+        title: String,
+        amount: Double,
+        category: Category,
+        isIncome: Bool
+    ) {
+
+        guard let entity = fetchEntity(for: transaction) else {
+            return
+        }
+
+        entity.id = transaction.id
+        entity.title = title
+        entity.amount = amount
+        entity.category = category.rawValue
+        entity.isIncome = isIncome
+        entity.date = transaction.date
+
+        do {
+            try context.save()
+
+            loadTransactions()
+
+        } catch {
+            print("Failed to update transaction:", error.localizedDescription)
+        }
+    }
+    
+    func loadTransactions() {
+
+        let request: NSFetchRequest<TransactionEntity> =
+            TransactionEntity.fetchRequest()
+
+        request.sortDescriptors = [
+            NSSortDescriptor(key: "date", ascending: false)
+        ]
+
+        do {
+
+            let entities = try context.fetch(request)
+
+            transactions = entities.map { entity in
+
+                Transaction(
+                    id: entity.id ?? UUID(),
+                    title: entity.title ?? "",
+                    amount: entity.amount,
+                    category: Category(rawValue: entity.category ?? "other") ?? .other,
+                    isIncome: entity.isIncome,
+                    date: entity.date ?? Date()
+                )
+
+            }
+
+        } catch {
+
+            print("Failed to load transactions:", error.localizedDescription)
+
+        }
+
+    }
     
     private func saveToCoreData(
         title: String,
@@ -278,43 +340,65 @@ class TransactionViewModel: ObservableObject {
         
         do {
             try context.save()
-            fetchTransactions()
+            loadTransactions()
             print("Transaction saved successfully")
         } catch {
             print("Failed to save transaction: ")
             print(error.localizedDescription)
         }
     }
+//    
+//    private func fetchTransactions() {
+//        
+//        let request: NSFetchRequest<TransactionEntity> = TransactionEntity.fetchRequest()
+//        
+//        request.sortDescriptors = [
+//            NSSortDescriptor(key: "date", ascending: false)
+//        ]
+//        
+//        do {
+//            let entities = try context.fetch(request)
+//            
+//            if(entities.isEmpty) {
+//                TransactionEntity.CreateDummyData(context: context)
+//            } else {
+//                
+//                transactions = entities.map { entity in
+//                    Transaction(
+//                        id: entity.id ?? UUID(),
+//                        title: entity.title ?? "",
+//                        amount: entity.amount,
+//                        category: Category(rawValue: entity.category ?? "") ?? .other,
+//                        isIncome: entity.isIncome,
+//                        date: entity.date ?? Date()
+//                    )
+//                }
+//            }
+//        } catch {
+//            print("Failed to fetch transactions")
+//            print(error.localizedDescription)
+//        }
+//    }
     
-    private func fetchTransactions() {
-        
-        let request: NSFetchRequest<TransactionEntity> = TransactionEntity.fetchRequest()
-        
-        request.sortDescriptors = [
-            NSSortDescriptor(key: "date", ascending: false)
-        ]
-        
+    private func fetchEntity(
+        for transaction: Transaction
+    ) -> TransactionEntity? {
+
+        let request: NSFetchRequest<TransactionEntity> =
+            TransactionEntity.fetchRequest()
+
+        request.predicate = NSPredicate(
+            format: "id == %@",
+            transaction.id as CVarArg
+        )
+
+        request.fetchLimit = 1
+
         do {
-            let entities = try context.fetch(request)
-            
-            if(entities.isEmpty) {
-                TransactionEntity.CreateDummyData(context: context)
-            } else {
-                
-                transactions = entities.map { entity in
-                    Transaction(
-                        id: entity.id ?? UUID(),
-                        title: entity.title ?? "",
-                        amount: entity.amount,
-                        category: Category(rawValue: entity.category ?? "") ?? .other,
-                        isIncome: entity.isIncome,
-                        date: entity.date ?? Date()
-                    )
-                }
-            }
+            return try context.fetch(request).first
         } catch {
-            print("Failed to fetch transactions")
             print(error.localizedDescription)
+            return nil
         }
     }
 }

@@ -20,10 +20,10 @@ struct BalanceCard: View {
 
             Divider()
 
-            HStack {
+            HStack(spacing: 20) {
 
                 // Income
-                HStack(spacing: 12) {
+                HStack(spacing: 10) {
 
                     Image(systemName: "arrow.down.circle.fill")
                         .font(.title2)
@@ -40,10 +40,8 @@ struct BalanceCard: View {
                             .font(.headline)
                     }
                 }
-                .padding()
             
                 Spacer()
-
                 // Expense
                 HStack(spacing: 12) {
 
@@ -62,7 +60,6 @@ struct BalanceCard: View {
                             .font(.headline)
                     }
                 }
-                .padding()
             }
         }
         .padding()

@@ -11,6 +11,7 @@ struct TransactionsView: View {
     
     @ObservedObject var transactionViewModel: TransactionViewModel
     @State private var searchInput = ""
+    @State private var selectedTransaction: Transaction?
     
     var filteredTransactions: [Finance_Dashboard.Transaction] {
         if searchInput.isEmpty {
@@ -22,6 +23,25 @@ struct TransactionsView: View {
                 $0.title.localizedCaseInsensitiveContains(searchInput)
             }
             .reversed()
+    }
+    
+    @ViewBuilder
+    private func transactionCard(_ transaction: Transaction) -> some View {
+        VStack(spacing: 0) {
+            TransactionRow(transaction: transaction)
+                .padding(12)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(
+            RoundedRectangle(cornerRadius: 14)
+                .fill(Color(.secondarySystemBackground))
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 14, style: .continuous)
+                .stroke(Color.black.opacity(0.05), lineWidth: 0.5)
+        )
+        .shadow(color: Color.black.opacity(0.06), radius: 6, x: 0, y: 3)
+        .padding(.horizontal)
     }
     
     var body: some View {
@@ -44,26 +64,21 @@ struct TransactionsView: View {
                             .padding(.vertical, 40)
                         } else {
                             ForEach(filteredTransactions) { transaction in
-                                VStack(spacing: 0) {
-                                    TransactionRow(transaction: transaction)
-                                        .padding(12)
-                                }
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 14, style: .continuous)
-                                        .fill(Color(.secondarySystemBackground))
-                                )
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 14, style: .continuous)
-                                        .stroke(Color.black.opacity(0.05), lineWidth: 0.5)
-                                )
-                                .shadow(color: Color.black.opacity(0.06), radius: 6, x: 0, y: 3)
-                                .padding(.horizontal)
+                                transactionCard(transaction)
+                                    .onTapGesture {
+                                        selectedTransaction = transaction
+                                    }
                             }
                         }
                     }
                     .padding(.vertical)
                 }
+            }
+            .sheet(item: $selectedTransaction) { transaction in
+                EditTransactionView(
+                    transactionViewModel: transactionViewModel,
+                    transaction: transaction
+                )
             }
             .navigationTitle("Transactions")
         }
