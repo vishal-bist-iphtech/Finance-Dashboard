@@ -32,7 +32,7 @@ struct HeaderCard: View {
                 .overlay(alignment: .topTrailing) {
 
                     Circle()
-                        .fill(.white.opacity(0.08))
+                        .fill(.primary.opacity(0.08))
                         .frame(width: 180)
                         .offset(x: 60, y: -40)
                         .allowsHitTesting(false)
@@ -41,7 +41,7 @@ struct HeaderCard: View {
                 .overlay(alignment: .bottomLeading) {
 
                     Circle()
-                        .fill(.white.opacity(0.05))
+                        .fill(.primary.opacity(0.05))
                         .frame(width: 120)
                         .offset(x: -30, y: 40)
                         .allowsHitTesting(false)
@@ -67,6 +67,19 @@ struct HeaderCard: View {
                     }
 
                     Spacer()
+                    
+                    Button {
+                        withAnimation(.easeInOut(duration: 0.25)) {
+                            isDarkMode.toggle()
+                        }
+                    } label: {
+                        Image(systemName: isDarkMode ? "sun.max.fill": "moon.fill")
+                            .font(.title3.weight(.semibold))
+                            .foregroundStyle(isDarkMode ? .white : .black)
+                            .frame(width: 44, height: 44)
+                            .background(.white.opacity(0.2))
+                            .clipShape(Circle())
+                    }
 
                     Button {
 
@@ -76,7 +89,7 @@ struct HeaderCard: View {
 
                         Image(systemName: "plus")
                             .font(.title3.weight(.bold))
-                            .foregroundStyle(.white)
+                            .foregroundStyle(.primary)
                             .frame(width: 46, height: 46)
                             .background(.white.opacity(0.20))
                             .clipShape(Circle())

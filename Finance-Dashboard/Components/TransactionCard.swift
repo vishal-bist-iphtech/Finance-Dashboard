@@ -15,12 +15,12 @@ struct TransactionCard: View {
                 Text(transaction.title) .font(.headline)
                 Text(transaction.category.rawValue)
                 .font(.caption)
-                .foregroundColor(.gray)
+                .foregroundColor(Color(.systemBackground))
             }
             Spacer()
             VStack( spacing: 5) {
                 Text(transaction.isIncome ? "+₹\(transaction.amount, specifier: "%.2f")" : "-₹\(transaction.amount, specifier: "%.2f")")
-                .foregroundColor(transaction.isIncome ? .green : .black)
+                .foregroundColor(transaction.isIncome ? .green : .primary)
                 .fontWeight(.bold)
                 Text(dateFormatter.string(from: transaction.date))
                 .font(.caption2)
@@ -38,9 +38,9 @@ struct TransactionCard: View {
         )
         .overlay(
             RoundedRectangle(cornerRadius: 14, style: .continuous)
-                .stroke(Color.black.opacity(0.05), lineWidth: 0.5)
+                .stroke(.secondary.opacity(0.05), lineWidth: 0.5)
         )
-        .shadow(color: Color.black.opacity(0.06), radius: 6, x: 0, y: 3)
+        .shadow(color: .secondary.opacity(0.2), radius: 6, x: 0, y: 3)
     }
 }
 

@@ -12,13 +12,14 @@ struct BalanceCard: View {
 
                 Text("Total Balance")
                     .font(.headline)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(.primary)
 
                 Text("₹\(transactionViewModel.totalBalance, specifier: "%.0f")")
                     .font(.system(size: 34, weight: .bold))
             }
 
             Divider()
+                .overlay(Color.secondary.opacity(0.3))
 
             HStack(spacing: 20) {
 
@@ -69,9 +70,9 @@ struct BalanceCard: View {
         )
         .overlay(
             RoundedRectangle(cornerRadius: 20)
-                .stroke(Color.gray.opacity(0.15), lineWidth: 1)
+                .stroke(Color(.secondarySystemBackground), lineWidth: 1)
         )
-        .shadow(color: .black.opacity(0.3), radius: 10, x: 0, y: 5)
+        .shadow(color: .secondary, radius: 10, x: 0, y: 5)
         .padding(.horizontal)
     }
 }

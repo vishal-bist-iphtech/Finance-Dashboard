@@ -29,7 +29,7 @@ struct InsightCard: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(12)
-        .background(color.opacity(0.06))
+        .background(.primary.opacity(0.06))
         .clipShape(RoundedRectangle(cornerRadius: 12))
     }
 

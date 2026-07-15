@@ -24,6 +24,7 @@ struct RecentTransactions: View {
                 }
             }
         }
+        .padding(.vertical)
         .padding(.horizontal, 6)
         .background(
             RoundedRectangle(cornerRadius: 20, style: .continuous)
@@ -31,10 +32,10 @@ struct RecentTransactions: View {
         )
         .overlay(
             RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .stroke(Color.black.opacity(0.05), lineWidth: 0.5)
+                .stroke(.secondary.opacity(0.1), lineWidth: 1)
         )
         .shadow(
-            color: Color.black.opacity(0.06),
+            color: .primary.opacity(0.2),
             radius: 6,
             x: 0,
             y: 3)

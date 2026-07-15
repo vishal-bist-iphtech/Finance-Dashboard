@@ -124,7 +124,7 @@ struct MonthlySummary: View {
                     Button(action: { showAddSavingsGoal = true }) {
                         Label("Add", systemImage: "plus.circle.fill")
                             .font(.subheadline)
-                            .foregroundColor(.black)
+                            .foregroundStyle(.primary)
                     }
                     .sheet(isPresented: $showAddSavingsGoal) {
                         AddSavingsGoalView(
@@ -139,7 +139,7 @@ struct MonthlySummary: View {
                         ZStack(alignment: .leading) {
                             // Background track
                             Rectangle()
-                                .fill(Color.gray.opacity(0.2))
+                                .fill(Color(.secondarySystemBackground))
                                 .frame(height: 8)
                                 .cornerRadius(4)
                             
@@ -185,10 +185,10 @@ struct MonthlySummary: View {
         )
         .overlay(
             RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .stroke(Color.black.opacity(0.05), lineWidth: 0.5)
+                .stroke(.secondary.opacity(0.05), lineWidth: 1)
         )
         .shadow(
-            color: Color.black.opacity(0.06),
+            color: .primary.opacity(0.2),
             radius: 6,
             x: 0,
             y: 3

@@ -14,6 +14,9 @@ struct ContentView: View {
 
     // TransactionViewModel initialized
     @ObservedObject var transactionViewModel: TransactionViewModel
+    
+    @AppStorage("isDarkMode")
+    private var isDarkMode = false
 
     var body: some View {
         
@@ -35,21 +38,18 @@ struct ContentView: View {
                         }
                         .tag(2)
                 
-            }
+        }.preferredColorScheme(isDarkMode ? .dark : .light)
     }
 
 }
 
-struct ContentView_Previews: PreviewProvider {
-
-    static var previews: some View {
+#Preview {
 
         Group {
             ContentView(transactionViewModel: TransactionViewModel(
                 context: PersistenceController.shared.container.viewContext
                 )
             )
-        }
 
     }
 
