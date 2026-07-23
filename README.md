@@ -210,3 +210,7 @@ Stored data includes:
 - Savings Goal
 
 ---
+
+# Demo 
+
+<video src="https://github.com/user-attachments/assets/8dfec97b-f000-4fe4-adf7-8ad183ab2afb" width="100%" controls autoplay loop playsinline></video>
